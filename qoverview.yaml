@@ -1,0 +1,28 @@
+# Path to the background image.
+# Set this to '{DESKTOP_WALLPAPER}' in order to use the current wallpaper.
+# You can also remove this entry for that.
+# Default: '{DESKTOP_WALLPAPER}'
+background-image: '{DESKTOP_WALLPAPER}'
+
+# Name of the icon theme to use.
+# Set this to '{SYSTEM_THEME}' in order to auto-detect icon theme
+# Auto-detection of icon theme only works in GNOME-based desktops (GNOME, Mate, Pantheon etc), KDE and Xfce.
+# You can also remove this entry for that.
+# Default: '{SYSTEM_THEME}'
+icon-theme: '{SYSTEM_THEME}'
+
+# Apps in the dock.
+# The entries are named with the filenames in /usr/share/applications, ~/.local/share/applications etc.
+# Remove to disable dock.
+dock-items:
+    - org.kde.dolphin
+    - org.kde.kate
+    - org.kde.konsole
+
+# The color overlayed on the background.
+# Format: rgba [red, green, blue, alpha(transparency)] where red, blue, green should be in the range of 0-255 and transparency in the range of 0.0-1.0
+# Default: [0, 0, 0, 0.5]
+background-color-overlay: [0, 0, 0, 0.5]
+
+# Set to false to disable closing of window when clicked with the middle mouse button
+middle-mouse-close: true
