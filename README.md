@@ -1,7 +1,7 @@
 # qOverview
 ### GNOME's Activities dashboard, for other desktops
 
-QOverview is a dashboard for \*nix desktops which ~~is a clone of~~ is inspired by GNOME's Activities.
+qOverview is a dashboard which ~~is a clone of~~ is inspired by GNOME's Activities.
 
 *qOverview*:
 
@@ -9,7 +9,7 @@ QOverview is a dashboard for \*nix desktops which ~~is a clone of~~ is inspired 
 
 *GNOME Activities*:
 
-![GNOME Activities](.github/gnome_activities.png)
+![GNOME Activities](.github/gnome-scrot.png)
 
 qOverview is written in QML with a Python backend.
 
