@@ -35,13 +35,24 @@ Download and run:
 
     $ sudo ./install.sh
 
-## How to Use
+## How to Setup & Use
 
-1. Set the `qoverview-config-server` command to run on startup
+### Initial Setup
 
-2. You can put the `qoverview` command on a shortcut key, and/or a screen corner.
+1. Set the `qoverview-config-server` command to run on startup.
+
+2. Run the command `qoverview-config-server >/dev/null 2>&1 & disown` in a terminal.
+
+3. Add items to the dock using the file `~/.config/qoverview.yaml`. See [Settings](#settings).
+
+4. You can now put the `qoverview` command on a shortcut key, and/or a screen corner.
 
 See your desktop's settings tool for these, or (for binding to a screen corner), use the Brightside program.
+
+### Use
+
+Press said shortcut key/screen corner and see!
+
 
 **NOTE**: In qOverview, middle mouse button click on a window will *close* it. This can be disabled, see [settings](#settings)
 
