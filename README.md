@@ -5,7 +5,7 @@ qOverview is a dashboard which ~~is a clone of~~ is inspired by GNOME's Activiti
 
 *qOverview*:
 
-![qoverview](.github/qoverview_scrot.png)
+![qoverview](.github/qoverview-scrot.png)
 
 *GNOME Activities*:
 
