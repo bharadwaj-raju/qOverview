@@ -38,7 +38,7 @@ class PythonQMLInterface(QObject):
 		print(w_id)
 		wm.close(w_id)
 
-	@pyqtSlot(bool)
+	@pyqtSlot(result=bool)
 	def is_midbutton_enabled(self):
 		return options.get('middle-mouse-close', True)
 
