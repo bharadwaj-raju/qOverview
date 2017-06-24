@@ -36,6 +36,8 @@ install qoverview.yaml ${XDG_CONFIG_HOME:-$user_home/.config}/qoverview.yaml
 
 install -m755 qoverview.py /usr/lib/qoverview/qoverview.py
 install -m755 config-server.py /usr/lib/qoverview/config-server.py
+install -m755 sensible-terminal.sh /usr/lib/qoverview/sensible-terminal.sh
+
 install -m644 ui.qml /usr/lib/qoverview/ui.qml
 install -m644 missing-icon.svg /usr/lib/qoverview/missing-icon.svg
 
