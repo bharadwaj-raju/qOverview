@@ -13,9 +13,8 @@ def get_window_ids():
 def get_window_name(win_id):
 
 	out = sp.check_output("wmctrl -l | grep %s | awk '{$1=\"\"; $2=\"\";$3=\"\"; print $0}' | sed 's/^   //g'" % win_id, shell=True)
-	out = out.decode("utf-8")
 
-	return out.rstrip()
+	return out.decode('utf-8').rstrip()
 
 def get_window_screenshot(win_id, filename):
 
@@ -27,19 +26,20 @@ def close(win_id):
 
 	sp.Popen(['xdotool', 'windowclose', win_id]).wait()
 
-def focus(win_id):
-
-	sp.Popen(['xdotool', 'windowfocus', win_id])
-
-def maximize(win_id):
-
-	sp.Popen(['xdotool', 'windowmaximize', win_id])
-
-def minimize(win_id):
-
-	sp.Popen(['xdotool', 'windowminimize', win_id])
-
 def activate(win_id):
 
 	sp.Popen(['xdotool', 'windowactivate', win_id])
+
+def get_num_workspaces():
+
+	out = sp.check_output(['xdotool', 'get_num_desktops'])
+	return int(out.decode('utf-8').rstrip())
+
+def switch_workspace(workspace_num):
+
+	sp.Popen(['xdotool', 'set_desktop', str(workspace_num)])
+
+def get_current_workspace():
+
+	return int(sp.check_output(['xdotool', 'get_desktop']).decode('utf-8').rstrip())
 

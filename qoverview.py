@@ -53,31 +53,22 @@ class PythonQMLInterface(QObject):
 	def search(self, search_terms):
 		results = []
 
-		case_sensitive = bool(search_terms.lower() != search_terms)
-		# Smart Case
-		# if user explicity enters uppercase characters, make it case-sensitive
-
 		done = []
 
 		for entry in self.apps_list:
 			try:
-				if case_sensitive:
-					if entry['Name'].startswith(search_terms) and entry['Name'] not in done:
-						results.append([entry['Name'], entry['EntryName']])
-						done.append(entry['Name'])
-
-				else:
-					if entry['Name'].lower().startswith(search_terms) and entry['Name'] not in done:
-						results.append([entry['Name'], entry['EntryName'], entry['IconPath']])
-						done.append(entry['Name'])
+				if entry['Name'].lower().startswith(search_terms.lower()) and entry['Name'] not in done:
+					results.append([entry['Name'], entry['EntryName'], entry['IconPath']])
+					done.append(entry['Name'])
 
 			except KeyError:
 				pass
 
-		return results
+		return sorted(results)
 
 	@pyqtSlot(result=list)
 	def get_background_overlay_color(self):
+		print(self.options.get('background-color-overlay'), None)
 		return self.options.get('background-color-overlay', [0, 0, 0, 0])
 
 	@pyqtSlot(result=str)
@@ -104,6 +95,29 @@ class PythonQMLInterface(QObject):
 			results.append([wm.get_window_name(w_id), wm.get_window_screenshot(w_id, str(index)), w_id])
 
 		return results
+
+	@pyqtSlot(result=list)
+	def get_workspaces(self):
+		return [str(x + 1) for x in range(wm.get_num_workspaces())]
+
+	@pyqtSlot(str)
+	def workspace_clicked(self, num):
+		self.view.hide()
+		print(num)
+		wm.switch_workspace(int(num) - 1)
+		sys.exit()
+
+	@pyqtSlot(result=str)
+	def get_current_workspace(self):
+		return str(wm.get_current_workspace() + 1)
+
+	@pyqtSlot(result=bool)
+	def is_workspaces_enabled(self):
+		return self.options.get('workspaces-sidebar', True)
+
+	@pyqtSlot(result=bool)
+	def	is_dock_enabled(self):
+		return bool(json.loads(config.get_dock_items()))
 
 
 if __name__ == "__main__":

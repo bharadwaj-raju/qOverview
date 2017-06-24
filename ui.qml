@@ -46,12 +46,15 @@ Item {
 
 		focus: true
 
+		width: 500
+		height: 30
+
 		anchors {
-			fill: parent
+			top: root.top
 			topMargin: 50
-			bottomMargin: 810
-			leftMargin: 250
-			rightMargin: 245
+			//bottomMargin: 810
+			//leftMargin: 550
+			//rightMargin: 545
 			horizontalCenter: parent.horizontalCenter
 		}
 
@@ -101,9 +104,15 @@ Item {
 		height: dockHeight
 
 		anchors {
-				leftMargin: 10
-				verticalCenter: parent.verticalCenter
+			left: root.left
+			verticalCenter: parent.verticalCenter
+		}
+
+		Component.onCompleted: {
+			if (! Python.is_dock_enabled()) {
+				visible = false
 			}
+		}
 
 		Column {
 			id: "dock"
@@ -140,6 +149,83 @@ Item {
 		}
 
 	}
+
+	Rectangle {
+		id: "workspacerect"
+		objectName: "workspacerect"
+
+		color: "#3A4055"
+
+		property int workspaceHeight: workspaces.height + 20
+
+		width: 80
+		height: workspaceHeight
+
+		anchors {
+			right: root.right
+			verticalCenter: parent.verticalCenter
+		}
+
+
+		Column {
+			id: "workspaces"
+			objectName: "workspaces"
+
+			spacing: 10
+			leftPadding: 10
+
+			anchors {
+				leftMargin: 10
+				verticalCenter: parent.verticalCenter
+				//horizontalCenter: parent.horizontalCenter
+			}
+
+			Repeater {
+				id: "workspaceloop"
+				objectName: "workspaceloop"
+
+				model: Python.get_workspaces()
+
+				Rectangle {
+
+					width: 64
+					height: 64
+
+					Text {
+						text: modelData
+						anchors {
+							horizontalCenter: parent.horizontalCenter
+							verticalCenter: parent.verticalCenter
+						}
+
+						Component.onCompleted: {
+							if (Python.get_current_workspace() == modelData) {
+								parent.color = "lightblue"
+							}
+
+							if (! Python.is_workspaces_enabled()) {
+								workspacerect.visible = false
+							}
+
+						}
+
+					}
+
+
+					MouseArea {
+						anchors.fill: parent
+						onClicked: {
+							Python.workspace_clicked(modelData)
+						}
+					}
+				}
+			}
+
+
+		}
+
+	}
+
 
 	Flickable {
 
@@ -318,60 +404,9 @@ Item {
 					}
 				}
 
-			/*
-
-			Image {
-				source: modelData[2]
-				height: 48
-				width: 48
-
-				MouseArea {
-					anchors.fill: parent
-					onClicked: {
-						Python.app_clicked(modelData[1])
-					}
-				}
-			}
-
-			Rectangle {
-				id: "applabel"
-				color: "#3A4055"
-
-				height: windowoverlaytext.paintedHeight + 2
-				width: 288
-
-				anchors {
-					horizontalCenter: parent.horizontalCenter
-					verticalCenter: parent.verticalCenter
-				}
-
-				Text {
-					id: "applabeltext"
-					text: modelData[0]
-					color: "#fff"
-					width: 288
-					elide: Text.ElideMiddle
-
-					horizontalAlignment: Text.AlignHCenter
-
-					anchors {
-						horizontalCenter: parent.horizontalCenter
-						verticalCenter: parent.verticalCenter
-					}
-
-				}
-
-			}*/
-
 		}
 
 	}
-
-	/*GammaAdjust {
-		anchors.fill: background
-		source: background
-		gamma: Python.get_background_gamma()
-	}*/
 
 }
 
