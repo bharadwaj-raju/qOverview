@@ -65,6 +65,30 @@ Press said shortcut key/screen corner and see!
 
 See the file `~/.config/qoverview.yaml`. It has all the settings (and is quite well-commented).
 
+## Binding to screen corner
+
+The `xdotool` utility will allow you to do bind qOverview to a screen corner or edge easily.
+
+You can bind to the following corners and edges of the screen:
+
+- `top`
+- `bottom`
+- `left`
+- `right`
+
+- `top-left`
+- `top-right`
+- `bottom-left`
+- `top-right`
+
+To do this, run the command
+
+    $ xdotool behave_screen_edge EDGE_OR_CORNER exec qoverview
+
+where `EDGE_OR_CORNER` is to be replaced with the position of your choice from the list above.
+
+Also, set the above-mentioned command to run at startup.
+
 ## License
 
 Licensed under the GNU General Public License version 3 or (at your option) a later version.
