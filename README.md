@@ -89,6 +89,13 @@ where `EDGE_OR_CORNER` is to be replaced with the position of your choice from t
 
 Also, set the above-mentioned command to run at startup.
 
+## What works and what doesn't
+
+Every feature of GNOME Activities is provided, except…
+
+- Drag-and-Drop windows to workspaces
+- A more natural layout for the windows
+
 ## License
 
 Licensed under the GNU General Public License version 3 or (at your option) a later version.
