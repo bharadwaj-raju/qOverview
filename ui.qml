@@ -8,6 +8,8 @@ Item {
 	id: "root"
 	objectName: "root"
 
+	/* BACKGROUND IMAGE */
+
 	Image {
 		id: "backgroundimg"
 		objectName: "backgroundimg"
@@ -36,8 +38,19 @@ Item {
 
 		property var overlaycolor: Python.get_background_overlay_color()
 
+		MouseArea {
+			anchors.fill: parent
+
+			onClicked: {
+				Python.background_clicked()
+			}
+		}
+
+
 		color: Qt.rgba(overlaycolor[0], overlaycolor[1], overlaycolor[2], overlaycolor[3])
 	}
+
+	/* SEARCH BAR */
 
 	TextField {
 		id: "searchfield"
@@ -91,6 +104,8 @@ Item {
 		}
 
 	}
+
+	/* DOCK */
 
 	Rectangle {
 		id: "dockrect"
@@ -150,6 +165,8 @@ Item {
 
 	}
 
+	/* WORKSPACES */
+
 	Rectangle {
 		id: "workspacerect"
 		objectName: "workspacerect"
@@ -193,6 +210,7 @@ Item {
 
 					Text {
 						text: modelData
+
 						anchors {
 							horizontalCenter: parent.horizontalCenter
 							verticalCenter: parent.verticalCenter
@@ -211,7 +229,6 @@ Item {
 
 					}
 
-
 					MouseArea {
 						anchors.fill: parent
 						onClicked: {
@@ -221,10 +238,11 @@ Item {
 				}
 			}
 
-
 		}
 
 	}
+
+	/* WINDOWS */
 
 
 	Flickable {
@@ -265,12 +283,14 @@ Item {
 
 			Repeater {
 				id: "windowsloop"
-				model: Python.get_windows()
+				model: Python.get_windows(Python.get_current_workspace())
 
 				Image {
 					source: modelData[1]
 					height: (sourceSize.height / 10) * 2
 					width: (sourceSize.width / 10) * 2
+
+					property string w_id: modelData[2]
 
 					MouseArea {
 						anchors.fill: parent
@@ -326,6 +346,8 @@ Item {
 			}
 		}
 	}
+
+	/* APPS */
 
 	Flow {
 		visible: false

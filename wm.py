@@ -3,9 +3,9 @@ import subprocess as sp
 
 tmp_dir = os.path.join(os.environ.get('XDG_RUNTIME_DIR', '/tmp'), 'qoverview')
 
-def get_window_ids():
+def get_window_ids(workspace):
 
-	out = sp.check_output("wmctrl -l | grep -v -- -1 | awk '{print $1}'", shell=True)
+	out = sp.check_output("wmctrl -l | awk '($2 != \"-1\") && ($2 == \"%s\") { print $1 }'" % workspace, shell=True)
 	out = out.decode('utf-8')
 
 	return [x.strip() for x in out.split('\n')][:-1]  # :-1 removes last element (which will be empty) from list
@@ -42,4 +42,12 @@ def switch_workspace(workspace_num):
 def get_current_workspace():
 
 	return int(sp.check_output(['xdotool', 'get_desktop']).decode('utf-8').rstrip())
+
+def move_to_workspace(workspace, w_id):
+
+	sp.Popen(['xdotool', 'set_desktop_for_window', w_id, str(workspace)]).wait()
+
+def get_focused_window():
+
+	return hex(int(sp.check_output(['xdotool', 'getactivewindow']).decode('utf-8').strip()))
 

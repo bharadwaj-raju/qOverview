@@ -49,6 +49,11 @@ class PythonQMLInterface(QObject):
 		config.desktop_entry_execute(config.desktop_entry_locate(app_item))
 		sys.exit()
 
+	@pyqtSlot()
+	def background_clicked(self):
+		self.view.hide()
+		sys.exit()
+
 	@pyqtSlot(str, result=list)
 	def search(self, search_terms):
 		results = []
@@ -68,7 +73,6 @@ class PythonQMLInterface(QObject):
 
 	@pyqtSlot(result=list)
 	def get_background_overlay_color(self):
-		print(self.options.get('background-color-overlay'), None)
 		return self.options.get('background-color-overlay', [0, 0, 0, 0])
 
 	@pyqtSlot(result=str)
@@ -86,13 +90,14 @@ class PythonQMLInterface(QObject):
 
 		return results
 
-	@pyqtSlot(result=list)
-	def get_windows(self):
-		ids = wm.get_window_ids()
+	@pyqtSlot(str, result=list)
+	def get_windows(self, workspace):
+		ids = wm.get_window_ids(int(workspace) - 1)
 		results = []
 
 		for index, w_id in enumerate(ids):
-			results.append([wm.get_window_name(w_id), wm.get_window_screenshot(w_id, str(index)), w_id])
+			if wm.get_window_name(w_id) not in ['qoverview.py', 'Desktop — Plasma']:
+				results.append([wm.get_window_name(w_id), wm.get_window_screenshot(w_id, str(index)), w_id])
 
 		return results
 
@@ -102,10 +107,15 @@ class PythonQMLInterface(QObject):
 
 	@pyqtSlot(str)
 	def workspace_clicked(self, num):
-		self.view.hide()
 		print(num)
 		wm.switch_workspace(int(num) - 1)
+		sp.Popen('python3 {}'.format(__file__), shell=True, preexec_fn=os.setpgrp)
+		# Restarting!
 		sys.exit()
+
+	@pyqtSlot(str, str)
+	def dropped_on_workspace(self, workspace, w_id):
+		print((workspace, w_id))
 
 	@pyqtSlot(result=str)
 	def get_current_workspace(self):

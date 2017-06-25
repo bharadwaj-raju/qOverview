@@ -25,7 +25,10 @@ The following programs must be installed before installing qOverview. Package na
 - Python-GObject (Arch: `python-gobject` | Ubuntu: `python3-gi` | SUSE: `python3-gobject` | Fedora: `pygobject3`)
 - PyYAML (Arch: `python-yaml` | Ubuntu: `python3-yaml` | SUSE: `python3-PyYAML` | Fedora: `python3-PyYAML` | PyPI/Pip: `PyYAML`)
 - imagemagick (Arch, Ubuntu, SUSE, Fedora: `imagemagick`)
+- wmctrl (Arch, Ubuntu, SUSE, Fedora: `wmctrl`)
 - xdotool (Arch, Ubuntu, SUSE, Fedora: `xdotool`)
+
+**NOTE**: qOverview needs X11 to run, and thus is incompatible with Wayland.
 
 <small>If the listed package names are incorrect/don't work/etc please [report the issue](https://github.com/bharadwaj-raju/qOverview/issues/new)!</small>
 
@@ -47,7 +50,9 @@ Download and run:
 
 4. You can now put the `qoverview` command on a shortcut key, and/or a screen corner.
 
-See your desktop's settings tool for these, or (for binding to a screen corner), use the Brightside program.
+See your desktop's settings tool for these.
+
+For putting qOverview on a screen corner, see [Binding to screen corner](#binding-to-screen-corner).
 
 ### Use
 
