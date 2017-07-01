@@ -40,6 +40,7 @@ install -m755 sensible-terminal.sh /usr/lib/qoverview/sensible-terminal.sh
 
 install -m644 ui.qml /usr/lib/qoverview/ui.qml
 install -m644 missing-icon.svg /usr/lib/qoverview/missing-icon.svg
+install -m644 wm.py /usr/lib/qoverview/wm.py
 
 install -D -m664 README.md /usr/share/doc/qoverview/README
 install -D -m664 LICENSE /usr/share/licenses/qoverview/COPYING

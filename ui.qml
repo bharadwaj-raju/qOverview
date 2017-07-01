@@ -4,6 +4,8 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 
+/* TODO: will depend on this after WindowThumbnail is fixed: import org.kde.plasma.core 2.0 */
+
 Item {
 	id: "root"
 	objectName: "root"
@@ -281,9 +283,20 @@ Item {
 				verticalCenter: parent.verticalCenter
 			}
 
+			/* TODO: Why doesn't WindowThumbnail work inside a Flow? */
+
 			Repeater {
 				id: "windowsloop"
 				model: Python.get_windows(Python.get_current_workspace())
+
+				/* TODO: Uncomment after the aforementioned TODO is fixed.
+				 Item {
+					WindowThumbnail {
+						winId: modelData[1]
+						anchors.fill: parent
+						Component.onCompleted: console.log(modelData[1])
+					}
+				}*/
 
 				Image {
 					source: modelData[1]

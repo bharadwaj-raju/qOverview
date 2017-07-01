@@ -97,6 +97,8 @@ class PythonQMLInterface(QObject):
 
 		for index, w_id in enumerate(ids):
 			if wm.get_window_name(w_id) not in ['qoverview.py', 'Desktop — Plasma']:
+				# TODO: uncomment after fixing WindowThumbnail
+				# results.append([wm.get_window_name(w_id), int(w_id, 16)])
 				results.append([wm.get_window_name(w_id), wm.get_window_screenshot(w_id, str(index)), w_id])
 
 		return results
