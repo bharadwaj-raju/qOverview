@@ -24,7 +24,6 @@ The following programs must be installed before installing qOverview. Package na
 - Python-DBus (Arch: `python-dbus` | Ubuntu: `python3-dbus` | SUSE: `python-dbus` | Fedora: `python3-dbus`)
 - Python-GObject (Arch: `python-gobject` | Ubuntu: `python3-gi` | SUSE: `python3-gobject` | Fedora: `pygobject3`)
 - PyYAML (Arch: `python-yaml` | Ubuntu: `python3-yaml` | SUSE: `python3-PyYAML` | Fedora: `python3-PyYAML` | PyPI/Pip: `PyYAML`)
-- imagemagick (Arch, Ubuntu, SUSE, Fedora: `imagemagick`)
 - wmctrl (Arch, Ubuntu, SUSE, Fedora: `wmctrl`)
 - xdotool (Arch, Ubuntu, SUSE, Fedora: `xdotool`)
 
@@ -34,9 +33,13 @@ The following programs must be installed before installing qOverview. Package na
 
 ### Installation
 
-Download and run:
+Download and run this:
 
     $ sudo ./install.sh
+
+**NOTE**: Don't want to use the KDE Frameworks version? Add `--no-kde-frameworks` to the command above.
+
+**NOTE**: To uninstall, use the above command with `--uninstall`
 
 ## How to Setup & Use
 

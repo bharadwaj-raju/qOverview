@@ -15,8 +15,7 @@ import wm
 
 tmp_dir = os.path.join(os.environ.get('XDG_RUNTIME_DIR', '/tmp'), 'qoverview')
 
-socket_path = os.path.join(tmp_dir, 'sock')
-pid_file_path = os.path.join(tmp_dir, 'server.pid')
+KDE_FRAMEWORKS = True
 
 class PythonQMLInterface(QObject):
 
@@ -151,10 +150,15 @@ if __name__ == "__main__":
 		print('Start it and try again. The command is "qoverview-config-server"')
 		sys.exit(1)
 
+	print('KDE Frameworks:', 'Yes' if KDE_FRAMEWORKS else 'No')
+
 	app = QGuiApplication(sys.argv)
 
-	qmlview = QQuickView(QUrl('ui.qml'))
+	if os.path.exists('ui.qml'):
+		qmlview = QQuickView(QUrl('ui.qml'))
 
+	else:
+		qmlview = QQuickView(QUrl('/usr/lib/qoverview/ui.qml'))
 
 	qmlview.setResizeMode(qmlview.SizeRootObjectToView)
 

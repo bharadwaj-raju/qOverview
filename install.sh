@@ -54,12 +54,12 @@ chown -R $user_pre_sudo ${XDG_CONFIG_HOME:-$user_home/.config}/qoverview.yaml
 ln -sf /usr/lib/qoverview/qoverview.py /usr/bin/qoverview
 ln -sf /usr/lib/qoverview/config-server.py /usr/bin/qoverview-config-server
 
-if [ ${NO_KDE:-"false"} = "true"]; then
+if [ ${NO_KDE:-"false"} = "true" ]; then
 	echo "Patching files to not use KDE Frameworks..."
-	OLD_PWD=$(pwd)
-	cd /usr/lib/qoverview
-	patch -p1 < patches/ui-no-kde.patch
-	patch -p1 < patches/qoverview-no-kde.patch
+	echo "Patching ui.qml..."
+	patch /usr/lib/qoverview/ui.qml < patches/ui-non-kde.patch
+	echo "Patching qoverview.py"
+	patch /usr/lib/qoverview/qoverview.py < patches/qoverview-non-kde.patch
 	cd "$OLD_PWD"
 fi
 

@@ -1,11 +1,20 @@
---- qoverview.py	2017-07-06 12:42:12.331213438 +0530
-+++ /tmp/qoverview.py	2017-07-06 12:59:09.084035189 +0530
-@@ -103,7 +103,7 @@
- 
+--- qoverview.py	2017-07-06 13:50:30.353599157 +0530
++++ qoverview.py	2017-07-06 13:54:52.668817481 +0530
+@@ -15,7 +15,7 @@
+
+ tmp_dir = os.path.join(os.environ.get('XDG_RUNTIME_DIR', '/tmp'), 'qoverview')
+
+-KDE_FRAMEWORKS = True
++KDE_FRAMEWORKS = False
+
+ class PythonQMLInterface(QObject):
+
+@@ -102,7 +102,7 @@
+
  		for index, w_id in enumerate(ids):
  			if wm.get_window_name(w_id) not in [self.uid, 'Desktop — Plasma']:
 -				results.append([wm.get_window_name(w_id), w_id, int(w_id, 16)])
-+				results.append([wm.get_window_name(w_id), w_id, wm.get_window_screenshot(w_id)])
- 
++				results.append([wm.get_window_name(w_id), w_id, wm.get_window_screenshot(w_id, str(int(w_id, 16)))])
+
  		return results
- 
+
