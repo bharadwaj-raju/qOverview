@@ -4,7 +4,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 
-/* TODO: will depend on this after WindowThumbnail is fixed: import org.kde.plasma.core 2.0 */
+import org.kde.plasma.core 2.0
 
 Item {
 	id: "root"
@@ -271,52 +271,33 @@ Item {
 
 			spacing: 20
 
-			//property int rowCount: parent.width / (elements.itemAt(0).width + spacing)
-			//property int rowWidth: rowCount * elements.itemAt(0).width + (rowCount - 1) * spacing
-			//property int mar: (parent.width - rowWidth) / 2
-
 			anchors {
 				fill: parent
-				//leftMargin: mar
-				//rightMargin: mar
 				horizontalCenter: parent.horizontalCenter
 				verticalCenter: parent.verticalCenter
 			}
-
-			/* TODO: Why doesn't WindowThumbnail work inside a Flow? */
 
 			Repeater {
 				id: "windowsloop"
 				model: Python.get_windows(Python.get_current_workspace())
 
-				/* TODO: Uncomment after the aforementioned TODO is fixed.
-				 Item {
-					WindowThumbnail {
-						winId: modelData[1]
-						anchors.fill: parent
-						Component.onCompleted: console.log(modelData[1])
-					}
-				}*/
-
-				Image {
-					source: modelData[1]
-					height: (sourceSize.height / 10) * 2
-					width: (sourceSize.width / 10) * 2
-
-					property string w_id: modelData[2]
+				WindowThumbnail {
+					winId: modelData[2]
+					width: 288
+					height: 140
 
 					MouseArea {
 						anchors.fill: parent
 						acceptedButtons: Qt.LeftButton | Qt.MiddleButton
 						onPressed: {
 							if (pressedButtons & Qt.LeftButton) {
-								Python.window_clicked(modelData[2])
+								Python.window_clicked(modelData[1])
 							}
 
 							else {
 								if (pressedButtons & Qt.MiddleButton) {
 									if (Python.is_midbutton_enabled()) {
-										Python.window_clicked_midbutton(modelData[2])
+										Python.window_clicked_midbutton(modelData[1])
 										parent.visible = false
 									}
 								}
@@ -330,7 +311,7 @@ Item {
 						color: "#3A4055"
 
 						height: windowoverlaytext.paintedHeight + 2
-						width: parent.width + 2
+						width: 288 + 2
 
 						anchors {
 							bottom: parent.bottom
@@ -342,7 +323,7 @@ Item {
 							id: "windowoverlaytext"
 							text: modelData[0]
 							color: "#fff"
-							width: parent.width - 2
+							width: 288
 							elide: Text.ElideMiddle
 
 							horizontalAlignment: Text.AlignHCenter
@@ -355,7 +336,9 @@ Item {
 						}
 					}
 
+
 				}
+
 			}
 		}
 	}

@@ -22,6 +22,10 @@ case "$1" in
 		rm -rf /usr/share/licenses/qoverview
 		exit
 		;;
+	"--no-kde-frameworks")
+		echo "Installing version which does not use KDE Frameworks..."
+		echo "The KDE Frameworks version has live window previews, and faster startup."
+		NO_KDE="true"
 esac
 
 user_pre_sudo="$SUDO_USER"
@@ -49,6 +53,16 @@ chown -R $user_pre_sudo ${XDG_CONFIG_HOME:-$user_home/.config}/qoverview.yaml
 
 ln -sf /usr/lib/qoverview/qoverview.py /usr/bin/qoverview
 ln -sf /usr/lib/qoverview/config-server.py /usr/bin/qoverview-config-server
+
+if [ ${NO_KDE:-"false"} = "true"]; then
+	echo "Patching files to not use KDE Frameworks..."
+	OLD_PWD=$(pwd)
+	cd /usr/lib/qoverview
+	patch -p1 < patches/ui-no-kde.patch
+	patch -p1 < patches/qoverview-no-kde.patch
+	cd "$OLD_PWD"
+fi
+
 
 chmod -R a+r /usr/lib/qoverview
 chmod a+x /usr/bin/qoverview

@@ -5,12 +5,12 @@ import sys
 import subprocess as sp
 import dbus
 import json
+import uuid
 
 from PyQt5.QtCore import QObject, QUrl, pyqtSlot
-from PyQt5.QtGui import QGuiApplication
+from PyQt5.QtGui import QGuiApplication, QWindow
 from PyQt5.QtQuick import QQuickView
 
-#import config
 import wm
 
 tmp_dir = os.path.join(os.environ.get('XDG_RUNTIME_DIR', '/tmp'), 'qoverview')
@@ -25,17 +25,22 @@ class PythonQMLInterface(QObject):
 		super(PythonQMLInterface, self).__init__()
 		self.options = json.loads(config.get_config())
 		self.apps_list = json.loads(config.get_apps_list())
+		self.uid = str(uuid.uuid4())
+
+	@pyqtSlot(result=str)
+	def get_uuid(self):
+		return self.uid
 
 	@pyqtSlot(str)
 	def window_clicked(self, w_id):
-		print(w_id)
+		print('Switching to window:', w_id)
 		self.view.hide()
 		wm.activate(w_id)
 		sys.exit()
 
 	@pyqtSlot(str)
 	def window_clicked_midbutton(self, w_id):
-		print(w_id)
+		print('Closing window:', w_id)
 		wm.close(w_id)
 
 	@pyqtSlot(result=bool)
@@ -44,13 +49,14 @@ class PythonQMLInterface(QObject):
 
 	@pyqtSlot(str)
 	def app_clicked(self, app_item):
-		print(app_item)
+		print('Opening app:', app_item)
 		self.view.hide()
 		config.desktop_entry_execute(config.desktop_entry_locate(app_item))
 		sys.exit()
 
 	@pyqtSlot()
 	def background_clicked(self):
+		print('Background clicked, exiting')
 		self.view.hide()
 		sys.exit()
 
@@ -96,10 +102,8 @@ class PythonQMLInterface(QObject):
 		results = []
 
 		for index, w_id in enumerate(ids):
-			if wm.get_window_name(w_id) not in ['qoverview.py', 'Desktop — Plasma']:
-				# TODO: uncomment after fixing WindowThumbnail
-				# results.append([wm.get_window_name(w_id), int(w_id, 16)])
-				results.append([wm.get_window_name(w_id), wm.get_window_screenshot(w_id, str(index)), w_id])
+			if wm.get_window_name(w_id) not in [self.uid, 'Desktop — Plasma']:
+				results.append([wm.get_window_name(w_id), w_id, int(w_id, 16)])
 
 		return results
 
@@ -109,7 +113,7 @@ class PythonQMLInterface(QObject):
 
 	@pyqtSlot(str)
 	def workspace_clicked(self, num):
-		print(num)
+		print('Switching to workspace:', num)
 		wm.switch_workspace(int(num) - 1)
 		sp.Popen('python3 {}'.format(__file__), shell=True, preexec_fn=os.setpgrp)
 		# Restarting!
@@ -149,8 +153,8 @@ if __name__ == "__main__":
 
 	app = QGuiApplication(sys.argv)
 
-	qmlview = QQuickView()
-	qmlview.setSource(QUrl('ui.qml'))
+	qmlview = QQuickView(QUrl('ui.qml'))
+
 
 	qmlview.setResizeMode(qmlview.SizeRootObjectToView)
 
@@ -158,8 +162,10 @@ if __name__ == "__main__":
 	context = qmlview.rootContext()
 
 	interface = PythonQMLInterface(view=qmlview)
-
 	context.setContextProperty('Python', interface)
+
+	qmlview.setTitle(interface.uid)
+	print(interface.uid)
 
 	qmlview.showFullScreen()
 

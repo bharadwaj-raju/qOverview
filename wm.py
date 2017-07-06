@@ -16,12 +16,6 @@ def get_window_name(win_id):
 
 	return out.decode('utf-8').rstrip()
 
-def get_window_screenshot(win_id, filename):
-
-	sp.Popen(['import', '-quiet', '-window', win_id, os.path.join(tmp_dir, filename + '.png')]).wait()
-
-	return os.path.join(tmp_dir, filename + '.png')
-
 def close(win_id):
 
 	sp.Popen(['xdotool', 'windowclose', win_id]).wait()
@@ -43,6 +37,11 @@ def get_current_workspace():
 
 	return int(sp.check_output(['xdotool', 'get_desktop']).decode('utf-8').rstrip())
 
+def get_window_screenshot(win_id, filename):
+
+	sp.Popen(['import', '-quiet', '-window', win_id, os.path.join(tmp_dir, filename + '.png')]).wait()
+	return os.path.join(tmp_dir, filename + '.png')
+
 def move_to_workspace(workspace, w_id):
 
 	sp.Popen(['xdotool', 'set_desktop_for_window', w_id, str(workspace)]).wait()
@@ -50,4 +49,8 @@ def move_to_workspace(workspace, w_id):
 def get_focused_window():
 
 	return hex(int(sp.check_output(['xdotool', 'getactivewindow']).decode('utf-8').strip()))
+
+def set_window_title(window, title):
+
+	sp.Popen(['xdotool', 'set_window', '--name', title, window]).wait()
 
