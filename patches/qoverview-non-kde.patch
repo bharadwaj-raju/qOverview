@@ -1,5 +1,5 @@
---- qoverview.py	2017-07-06 13:50:30.353599157 +0530
-+++ qoverview.py	2017-07-06 13:54:52.668817481 +0530
+--- qoverview.py	2017-07-07 22:19:16.170044502 +0530
++++ qoverview.py	2017-07-07 22:33:12.418643716 +0530
 @@ -15,7 +15,7 @@
 
  tmp_dir = os.path.join(os.environ.get('XDG_RUNTIME_DIR', '/tmp'), 'qoverview')
@@ -8,6 +8,24 @@
 +KDE_FRAMEWORKS = False
 
  class PythonQMLInterface(QObject):
+
+@@ -68,7 +68,7 @@
+ 		for entry in self.apps_list:
+ 			try:
+ 				if entry['Name'].lower().startswith(search_terms.lower()) and entry['Name'] not in done:
+-					results.append([entry['Name'], entry['EntryName'], entry['Icon']])
++					results.append([entry['Name'], entry['EntryName'], entry['IconPath']])
+ 					done.append(entry['Name'])
+
+ 			except KeyError:
+@@ -91,7 +91,7 @@
+
+ 		for entry in self.apps_list:
+ 			if entry['EntryName'] in dock_items_list:
+-				results.append([entry['Name'], entry['EntryName'], entry['Icon']])
++				results.append([entry['Name'], entry['EntryName'], entry['IconPath']])
+
+ 		return results
 
 @@ -102,7 +102,7 @@
 

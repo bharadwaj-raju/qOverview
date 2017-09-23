@@ -68,7 +68,7 @@ class PythonQMLInterface(QObject):
 		for entry in self.apps_list:
 			try:
 				if entry['Name'].lower().startswith(search_terms.lower()) and entry['Name'] not in done:
-					results.append([entry['Name'], entry['EntryName'], entry['IconPath']])
+					results.append([entry['Name'], entry['EntryName'], entry['Icon']])
 					done.append(entry['Name'])
 
 			except KeyError:
@@ -91,7 +91,7 @@ class PythonQMLInterface(QObject):
 
 		for entry in self.apps_list:
 			if entry['EntryName'] in dock_items_list:
-				results.append([entry['Name'], entry['EntryName'], entry['IconPath']])
+				results.append([entry['Name'], entry['EntryName'], entry['Icon']])
 
 		return results
 

@@ -67,9 +67,6 @@ Item {
 		anchors {
 			top: root.top
 			topMargin: 50
-			//bottomMargin: 810
-			//leftMargin: 550
-			//rightMargin: 545
 			horizontalCenter: parent.horizontalCenter
 		}
 
@@ -141,7 +138,6 @@ Item {
 			anchors {
 				leftMargin: 10
 				verticalCenter: parent.verticalCenter
-				//horizontalCenter: parent.horizontalCenter
 			}
 
 			Repeater {
@@ -150,8 +146,11 @@ Item {
 
 				model: Python.get_dock_items()
 
-				Image {
+				IconItem {
 					source: modelData[2]
+
+					width: units.iconSizes.huge
+					height: units.iconSizes.huge
 
 					MouseArea {
 						anchors.fill: parent
@@ -252,8 +251,6 @@ Item {
 		id: "windowsscrollview"
 		objectName: "windowsscrollview"
 
-		//contentHeight: windowsgrid.height
-
 		anchors {
 			fill: parent
 			leftMargin: 270
@@ -351,7 +348,7 @@ Item {
 		id: "appsgrid"
 		objectName: "appsgrid"
 
-		spacing: 20
+		spacing: 50
 
 		anchors {
 			fill: parent
@@ -369,45 +366,38 @@ Item {
 
 			model: [['Name', 'EntryName', 'IconPath']]
 
-				Image {
+				IconItem {
 					source: modelData[2]
-					height: 48
-					width: 48
+					height: units.iconSizes.huge
+					width: units.iconSizes.huge
 
 					MouseArea {
 						anchors.fill: parent
-						hoverEnabled: true
 						onClicked: {
 							Python.app_clicked(modelData[1])
-						}
-						onEntered: {
-							applabel.visible = true
-						}
-						onExited: {
-							applabel.visible = false
 						}
 					}
 
 
 					Rectangle {
 						id: "applabel"
-						color: "#3A4055"
-
-						visible: false
+						color: "transparent"
 
 						height: applabeltext.paintedHeight + 2
-						width: applabeltext.paintedWidth + 2
+						width: parent.paintedWidth + 20
 
 						anchors {
 							top: parent.bottom
-							//horizontalCenter: parent.horizontalCenter
+							horizontalCenter: parent.horizontalCenter
 						}
 
 						Text {
 							id: "applabeltext"
 							text: modelData[0]
 							color: "#fff"
-							elide: Text.ElideMiddle
+
+							width: parent.width
+							wrapMode: Text.WordWrap
 
 							horizontalAlignment: Text.AlignHCenter
 

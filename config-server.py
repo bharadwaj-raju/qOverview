@@ -7,7 +7,6 @@ from textwrap import dedent
 import yaml
 import json
 import configparser
-import glob
 
 import dbus
 import dbus.service
@@ -365,8 +364,6 @@ def _get_icon(icon_name, categories=['apps', 'actions', 'preferences', ]):
 			theme = 'hicolor'
 
 	theme = theme.strip()
-
-	glob.glob('', recursive=True)
 
 	for path in search_paths:
 		for cat in categories:

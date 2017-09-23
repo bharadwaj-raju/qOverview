@@ -1,44 +1,72 @@
---- ui.qml	2017-07-06 13:03:49.792511360 +0530
-+++ ui.qml	2017-07-06 12:56:09.332889080 +0530
+--- ui.qml	2017-07-07 23:40:58.556287773 +0530
++++ /tmp/ui-non-kde.qml	2017-07-08 09:41:35.311539023 +0530
 @@ -4,8 +4,6 @@
  import QtQuick.Controls.Styles 1.4
  import QtGraphicalEffects 1.0
-
+ 
 -import org.kde.plasma.core 2.0
 -
  Item {
  	id: "root"
  	objectName: "root"
-@@ -281,10 +279,10 @@
+@@ -146,12 +144,9 @@
+ 
+ 				model: Python.get_dock_items()
+ 
+-				IconItem {
++				Image {
+ 					source: modelData[2]
+ 
+-					width: units.iconSizes.huge
+-					height: units.iconSizes.huge
+-
+ 					MouseArea {
+ 						anchors.fill: parent
+ 						onClicked: {
+@@ -278,10 +273,10 @@
  				id: "windowsloop"
  				model: Python.get_windows(Python.get_current_workspace())
-
+ 
 -				WindowThumbnail {
 -					winId: modelData[2]
 -					width: 288
 -					height: 140
 +				Image {
 +					source: modelData[2]
-+					height: (sourceSize.height / 10) * 2
 +					width: (sourceSize.width / 10) * 2
-
++					height: (sourceSize.height / 10) * 2
+ 
  					MouseArea {
  						anchors.fill: parent
-@@ -311,7 +309,7 @@
+@@ -308,7 +303,7 @@
  						color: "#3A4055"
-
+ 
  						height: windowoverlaytext.paintedHeight + 2
 -						width: 288 + 2
 +						width: parent.width + 2
-
+ 
  						anchors {
  							bottom: parent.bottom
-@@ -323,7 +321,7 @@
+@@ -320,7 +315,7 @@
  							id: "windowoverlaytext"
  							text: modelData[0]
  							color: "#fff"
 -							width: 288
 +							width: parent.width - 2
  							elide: Text.ElideMiddle
-
+ 
  							horizontalAlignment: Text.AlignHCenter
+@@ -366,10 +361,10 @@
+ 
+ 			model: [['Name', 'EntryName', 'IconPath']]
+ 
+-				IconItem {
++				Image {
+ 					source: modelData[2]
+-					height: units.iconSizes.huge
+-					width: units.iconSizes.huge
++					height: 48
++					width: 48
+ 
+ 					MouseArea {
+ 						anchors.fill: parent
