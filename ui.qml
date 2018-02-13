@@ -4,7 +4,9 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 
+#ifdef KDEPLASMA
 import org.kde.plasma.core 2.0
+#endif
 
 Item {
 	id: "root"
@@ -146,11 +148,15 @@ Item {
 
 				model: Python.get_dock_items()
 
+				#ifdef KDEPLASMA
 				IconItem {
 					source: modelData[2]
-
 					width: units.iconSizes.huge
 					height: units.iconSizes.huge
+				#else
+				Image {
+					source: modelData[2]
+				#endif
 
 					MouseArea {
 						anchors.fill: parent
@@ -278,10 +284,17 @@ Item {
 				id: "windowsloop"
 				model: Python.get_windows(Python.get_current_workspace())
 
+				#ifdef KDEPLASMA
 				WindowThumbnail {
 					winId: modelData[2]
 					width: 288
 					height: 140
+				#else
+				Image {
+					source: modelData[2]
+					width: (sourceSize.width / 10) * 2
+					height: (sourceSize.height / 10) * 2
+				#endif
 
 					MouseArea {
 						anchors.fill: parent
@@ -366,10 +379,15 @@ Item {
 
 			model: [['Name', 'EntryName', 'IconPath']]
 
+				#ifdef KDEPLASMA
 				IconItem {
 					source: modelData[2]
 					height: units.iconSizes.huge
 					width: units.iconSizes.huge
+				#else
+				Image {
+					source: modelData[2]
+				#endif
 
 					MouseArea {
 						anchors.fill: parent

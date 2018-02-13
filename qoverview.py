@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 import sys
 import subprocess as sp
@@ -15,7 +13,11 @@ import wm
 
 tmp_dir = os.path.join(os.environ.get('XDG_RUNTIME_DIR', '/tmp'), 'qoverview')
 
+#ifdef KDEPLASMA
 KDE_FRAMEWORKS = True
+#else
+KDE_FRAMEWORKS = False
+#endif
 
 class PythonQMLInterface(QObject):
 
@@ -68,7 +70,11 @@ class PythonQMLInterface(QObject):
 		for entry in self.apps_list:
 			try:
 				if entry['Name'].lower().startswith(search_terms.lower()) and entry['Name'] not in done:
+					#ifdef KDEPLASMA
 					results.append([entry['Name'], entry['EntryName'], entry['Icon']])
+					#else
+					results.append([entry['Name'], entry['EntryName'], entry['IconPath']])
+					#endif
 					done.append(entry['Name'])
 
 			except KeyError:
@@ -91,7 +97,11 @@ class PythonQMLInterface(QObject):
 
 		for entry in self.apps_list:
 			if entry['EntryName'] in dock_items_list:
+				#ifdef KDEPLASMA
 				results.append([entry['Name'], entry['EntryName'], entry['Icon']])
+				#else
+				results.append([entry['Name'], entry['EntryName'], entry['IconPath']])
+				#endif
 
 		return results
 
@@ -102,7 +112,11 @@ class PythonQMLInterface(QObject):
 
 		for index, w_id in enumerate(ids):
 			if wm.get_window_name(w_id) not in [self.uid, 'Desktop — Plasma']:
+				#ifdef KDEPLASMA
 				results.append([wm.get_window_name(w_id), w_id, int(w_id, 16)])
+				#else
+				results.append([wm.get_window_name(w_id), w_id, wm.get_window_screenshot(str(int(w_id, 16)))])
+				#endif
 
 		return results
 
@@ -115,7 +129,6 @@ class PythonQMLInterface(QObject):
 		print('Switching to workspace:', num)
 		wm.switch_workspace(int(num) - 1)
 		sp.Popen('python3 {}'.format(__file__), shell=True, preexec_fn=os.setpgrp)
-		# Restarting!
 		sys.exit()
 
 	@pyqtSlot(str, str)
@@ -139,7 +152,6 @@ if __name__ == "__main__":
 
 	os.makedirs(tmp_dir, exist_ok=True)
 
-	# DBUS Setup
 	try:
 		bus = dbus.SessionBus()
 		session = bus.get_object('org.qoverview.config', '/org/qoverview/config')

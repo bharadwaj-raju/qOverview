@@ -87,7 +87,7 @@ def _get_desktop_env():
 
 	return 'unknown'
 
-
+global desktop_env
 desktop_env = _get_desktop_env()
 
 
@@ -463,7 +463,8 @@ class Service(dbus.service.Object):
 
 	@dbus.service.method("org.qoverview.config.iface")
 	def get_background(self):
-		return _get_background()
+		print('argh')
+		return _get_background().replace('file://', '')
 
 	@dbus.service.method("org.qoverview.config.iface")
 	def get_dock_items(self):

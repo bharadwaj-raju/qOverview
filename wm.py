@@ -35,7 +35,15 @@ def switch_workspace(workspace_num):
 
 def get_current_workspace():
 
-	return int(sp.check_output(['xdotool', 'get_desktop']).decode('utf-8').rstrip())
+	res = int()
+
+	try:
+		res = int(sp.check_output(['xdotool', 'get_desktop']).decode('utf-8').rstrip())
+
+	except sp.CalledProcessError:
+		res = 1
+
+	return res
 
 def get_window_screenshot(win_id, filename):
 
