@@ -35,13 +35,11 @@ def switch_workspace(workspace_num):
 
 def get_current_workspace():
 
-	res = int()
-
 	try:
 		res = int(sp.check_output(['xdotool', 'get_desktop']).decode('utf-8').rstrip())
 
 	except sp.CalledProcessError:
-		res = 1
+		res = 0
 
 	return res
 

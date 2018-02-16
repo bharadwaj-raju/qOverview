@@ -115,7 +115,8 @@ class PythonQMLInterface(QObject):
 				#ifdef KDEPLASMA
 				results.append([wm.get_window_name(w_id), w_id, int(w_id, 16)])
 				#else
-				results.append([wm.get_window_name(w_id), w_id, wm.get_window_screenshot(str(int(w_id, 16)))])
+				results.append([wm.get_window_name(w_id), w_id, 
+								wm.get_window_screenshot(str(int(w_id, 16)), str(int(w_id, 16)))])
 				#endif
 
 		return results
@@ -126,14 +127,16 @@ class PythonQMLInterface(QObject):
 
 	@pyqtSlot(str)
 	def workspace_clicked(self, num):
-		print('Switching to workspace:', num)
+		print(f'Switching to workspace: {num}')
 		wm.switch_workspace(int(num) - 1)
 		sp.Popen('python3 {}'.format(__file__), shell=True, preexec_fn=os.setpgrp)
 		sys.exit()
 
 	@pyqtSlot(str, str)
 	def dropped_on_workspace(self, workspace, w_id):
-		print((workspace, w_id))
+		workspace = int(workspace) - 1  # workspaces are 0-indexed
+		wm.move_to_workspace(workspace, w_id)
+		print(f'{w_id} moved to workspace {workspace}')
 
 	@pyqtSlot(result=str)
 	def get_current_workspace(self):

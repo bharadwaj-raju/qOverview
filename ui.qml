@@ -210,36 +210,52 @@ Item {
 
 				model: Python.get_workspaces()
 
-				Rectangle {
+				DropArea {
 
 					width: 64
 					height: 64
 
-					Text {
-						text: modelData
+					onDropped: {
+						Python.dropped_on_workspace(modelData, drag.source.dragdata[1]);
+						windowsloop.model = Python.get_windows(Python.get_current_workspace());
+					}
+					onEntered: console.log("entered")
+
+					Rectangle {
 
 						anchors {
+							fill: parent
 							horizontalCenter: parent.horizontalCenter
 							verticalCenter: parent.verticalCenter
 						}
+						
+						Text {
+							text: modelData
 
-						Component.onCompleted: {
-							if (Python.get_current_workspace() == modelData) {
-								parent.color = "lightblue"
+							anchors {
+								fill: parent
+								horizontalCenter: parent.horizontalCenter
+								verticalCenter: parent.verticalCenter
 							}
 
-							if (! Python.is_workspaces_enabled()) {
-								workspacerect.visible = false
+							Component.onCompleted: {
+								if (Python.get_current_workspace() == modelData) {
+									parent.color = "lightblue";
+								}
+
+								if (! Python.is_workspaces_enabled()) {
+									workspacerect.visible = false;
+								}
+
 							}
 
 						}
 
-					}
-
-					MouseArea {
-						anchors.fill: parent
-						onClicked: {
-							Python.workspace_clicked(modelData)
+						MouseArea {
+							anchors.fill: parent
+							onClicked: {
+								Python.workspace_clicked(modelData)
+							}
 						}
 					}
 				}
@@ -320,13 +336,46 @@ Item {
 						id: "windowoverlay"
 						color: "#3A4055"
 
+						property var dragdata: modelData
+
 						height: windowoverlaytext.paintedHeight + 2
 						width: 288 + 2
 
 						anchors {
 							bottom: parent.bottom
 							horizontalCenter: parent.horizontalCenter
-							//verticalCenter: parent.verticalCenter
+						}
+
+						Drag.active: windowMouseArea.drag.active
+						Drag.dragType: Drag.Automatic
+						
+						states: State {
+							when: windowMouseArea.drag.active
+							ParentChange { target: windowoverlay;
+										   parent: root }
+							AnchorChanges { target: windowoverlay; 
+											anchors.verticalCenter: undefined; 
+											anchors.horizontalCenter: undefined; 
+											anchors.bottom: undefined; }
+						}
+
+						onXChanged: {
+							if (windowMouseArea.drag.active) {
+								windowoverlay.x = x
+							}
+						}
+						onYChanged: {
+							if (windowMouseArea.drag.active) {
+								windowoverlay.y = y
+							}
+						}
+
+						MouseArea {
+							id: windowMouseArea		
+							anchors.fill: parent
+							onReleased: parent.Drag.drop()
+							drag.target: parent
+							drag.axis: Drag.XandYAxis
 						}
 
 						Text {
@@ -365,7 +414,7 @@ Item {
 
 		anchors {
 			fill: parent
-            leftMargin: 270
+			leftMargin: 270
 			rightMargin: 250
 			topMargin: 280
 			bottomMargin: 100

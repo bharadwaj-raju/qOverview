@@ -51,7 +51,7 @@ fi
 
 mv qoverview-patched.py qoverview-patched-tmp.py
 echo '#!/usr/bin/env python3' | cat - qoverview-patched-tmp.py > qoverview-patched.py
-#rm qoverview-patched-tmp.py
+rm qoverview-patched-tmp.py
 
 install -d /usr/lib/qoverview
 install qoverview.yaml ${XDG_CONFIG_HOME:-$user_home/.config}/qoverview.yaml
@@ -72,8 +72,8 @@ chown -R $user_pre_sudo ${XDG_CONFIG_HOME:-$user_home/.config}/qoverview.yaml
 ln -sf /usr/lib/qoverview/qoverview.py /usr/bin/qoverview
 ln -sf /usr/lib/qoverview/config-server.py /usr/bin/qoverview-config-server
 
-#rm ui-patched.qml
-#rm qoverview-patched.py
+rm ui-patched.qml
+rm qoverview-patched.py
 
 chmod -R a+r /usr/lib/qoverview
 chmod a+x /usr/bin/qoverview
