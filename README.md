@@ -1,7 +1,7 @@
 # qOverview
 ### GNOME's Activities dashboard, for other desktops
 
-qOverview is a dashboard which ~~is a clone of~~ is inspired by GNOME's Activities.
+qOverview is a dashboard which is ~~a clone of~~ *inspired* by GNOME's Activities.
 
 *qOverview*:
 
@@ -64,6 +64,8 @@ Press said shortcut key/screen corner and see!
 
 **NOTE**: In qOverview, middle mouse button click on a window will *close* it. This can be disabled, see [settings](#settings)
 
+**NOTE**: To drag-and-drop a window to a workspace, drag it by holding the title bar below the window.
+
 ## Settings
 
 See the file `~/.config/qoverview.yaml`. It has all the settings (and is quite well-commented).
@@ -96,7 +98,6 @@ Also, set the above-mentioned command to run at startup.
 
 Every feature of GNOME Activities is provided, except…
 
-- Drag-and-Drop windows to workspaces
 - A more natural layout for the windows
 
 ## License

@@ -422,7 +422,8 @@ for path in search_paths:
 desktop_entries = uniq(desktop_entries)
 
 for entry in desktop_entries:
-	info = _get_desktop_entry_info(_desktop_entry_locate(entry))
+	if entry.endswith('.desktop'):
+		info = _get_desktop_entry_info(_desktop_entry_locate(entry))
 	info['EntryName'] = entry
 	apps_list.append(info)
 
