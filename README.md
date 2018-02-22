@@ -20,7 +20,7 @@ qOverview is written in QML with a Python backend.
 The following programs must be installed before installing qOverview. Package names of these for major distros are listed alongside.
 
 - Python 3
-- PyQt 5 (Arch: `python-pyqt5`, `qt5-declarative` | Ubuntu: `python3-pyqt5` | SUSE: `python3-qt5` | Fedora: `python3-PyQt5`)
+- PyQt 5 (Arch: `python-pyqt5`, `qt5-declarative` | Ubuntu: `python3-pyqt5`, `python3-pyqt5.qtquick` | SUSE: `python3-qt5` | Fedora: `python3-PyQt5`)
 - Python-DBus (Arch: `python-dbus` | Ubuntu: `python3-dbus` | SUSE: `python-dbus` | Fedora: `python3-dbus`)
 - Python-GObject (Arch: `python-gobject` | Ubuntu: `python3-gi` | SUSE: `python3-gobject` | Fedora: `pygobject3`)
 - PyYAML (Arch: `python-yaml` | Ubuntu: `python3-yaml` | SUSE: `python3-PyYAML` | Fedora: `python3-PyYAML` | PyPI/Pip: `PyYAML`)

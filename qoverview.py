@@ -136,7 +136,7 @@ class PythonQMLInterface(QObject):
 	def dropped_on_workspace(self, workspace, w_id):
 		workspace = int(workspace) - 1  # workspaces are 0-indexed
 		wm.move_to_workspace(workspace, w_id)
-		print(w_id, 'moved to workspace' workspace)
+		print(w_id, 'moved to workspace', workspace)
 
 	@pyqtSlot(result=str)
 	def get_current_workspace(self):

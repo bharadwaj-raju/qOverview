@@ -416,14 +416,14 @@ desktop_entries = []
 
 for path in search_paths:
 	for entry in os.listdir(path):
-		if os.path.isfile(os.path.join(path, entry)):
-			desktop_entries.append(entry.replace('.desktop', ''))
+		if entry.endswith('.desktop'):  # some distros (eg. KDE Neon) keep .distrib files here
+			if os.path.isfile(os.path.join(path, entry)):
+				desktop_entries.append(entry.replace('.desktop', ''))
 
 desktop_entries = uniq(desktop_entries)
 
 for entry in desktop_entries:
-	if entry.endswith('.desktop'):
-		info = _get_desktop_entry_info(_desktop_entry_locate(entry))
+	info = _get_desktop_entry_info(_desktop_entry_locate(entry))
 	info['EntryName'] = entry
 	apps_list.append(info)
 
