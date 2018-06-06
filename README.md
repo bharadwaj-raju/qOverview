@@ -1,3 +1,6 @@
+# qOverview has moved!
+# Now at [GitLab](https://gitlab.com/bharadwaj-raju/QOverview)!
+
 # qOverview
 ### GNOME's Activities dashboard, for other desktops
 
